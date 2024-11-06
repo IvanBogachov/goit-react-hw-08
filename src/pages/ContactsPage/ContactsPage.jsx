@@ -4,12 +4,12 @@ import ContactForm from '/src/components/ContactForm/ContactForm';
 import SearchBox from '/src/components/SearchBox/SearchBox';
 
 const ContactsPage = () => (
-  <main>
+  <div>
     <h2>Contacts</h2>
     <ContactForm />
     <SearchBox />
     <ContactList />
-  </main>
+  </div>
 );
 
 export default ContactsPage;

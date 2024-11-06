@@ -3,10 +3,10 @@ import RegistrationForm from '/src/components/RegistrationForm/RegistrationForm'
 
 const RegistrationPage = () => {
   return (
-    <main>
-      <h2>Register</h2>
+    <div>
+      <h2>Registation</h2>
       <RegistrationForm />
-    </main>
+    </div>
   );
 };
 
