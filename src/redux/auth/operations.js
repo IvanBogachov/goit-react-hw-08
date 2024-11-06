@@ -1,35 +1,58 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+axios.defaults.baseURL = 'https://connections-api.goit.global';
 
 export const register = createAsyncThunk(
-  "auth/register",
-  async (credentials) => {
-    const response = await axios.post("/users/signup", credentials);
-    return response.data;
+  'auth/register',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/users/signup', credentials);
+      axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
 
-export const login = createAsyncThunk("auth/login", async (credentials) => {
-  const response = await axios.post("/users/login", credentials);
-  return response.data;
-});
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.post('/users/login', credentials);
+      axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.post("/users/logout");
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    await axios.post('/users/logout');
+    delete axios.defaults.headers.common.Authorization;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
 });
 
 export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+  'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const token = state.auth.token;
+    const persistedToken = state.auth.token;
 
-    if (token === null) {
-      return thunkAPI.rejectWithValue("No token");
+    if (!persistedToken)
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${persistedToken}`;
+      const { data } = await axios.get('/users/current');
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    const response = await axios.get("/users/current");
-    return response.data;
   }
 );
