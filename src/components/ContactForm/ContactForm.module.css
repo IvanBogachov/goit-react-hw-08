@@ -1,103 +1,49 @@
-/* .formContact {
-  margin: auto;
-  border: 2px solid #000000;
-  border-radius: 8px;
-  width: 340px;
-  padding: 20px;
-  margin-bottom: 40px;
-}
-
-.formLabel {
-  text-align: start;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.formInputWrapper {
-  position: relative;
-}
-
-.formInput {
-  font-size: 18px;
-  background: transparent;
-  border: 1px solid #000000;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px;
-  margin-bottom: 30px;
-}
-
-.formErrorMessage {
-  position: absolute;
-  top: 48px;
-  left: 8px;
-  color: red;
-}
-
-.formButton {
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  background-color: buttonface;
-  font-size: 18px;
-  color: #000000;
-  transition: background-color 0.25s, color 0.25s;
-  margin-top: 10px;
-}
-.formButton:hover {
-  color: #ffffff;
-  background-color: #646cff;
-} */
 .formContact {
-  margin: auto;
-  border: 1px solid var(--deep-dark);
-  border-radius: 8px;
-  width: 320px;
-  padding: 20px;
-  margin-bottom: 40px;
+	margin: auto;
+	border: 1px solid var(--deep-dark);
+	border-radius: 8px;
+	width: 320px;
+	padding: 20px;
+	margin-bottom: 40px;
 }
 
 @media (prefers-color-scheme: light) {
-  .formContact {
-    border: 2px solid var(--light-silver);
-  }
+	.formContact {
+		border: 2px solid var(--light-silver);
+	}
 }
 
 .formLabel {
-  text-align: start;
-  display: block;
-  margin-bottom: 8px;
+	text-align: start;
+	display: block;
+	margin-bottom: 8px;
 }
 
 .formInputWrapper {
-  position: relative;
+	position: relative;
 }
 
 .formInput {
-  border-style: none;
-  border-radius: 8px;
-  padding-block: 8px;
-  padding-inline: 12px;
-  min-width: 300px;
-  width: 90%;
-  margin-bottom: 30px;
+	border-style: none;
+	border-radius: 8px;
+	padding-block: 8px;
+	padding-inline: 12px;
+	min-width: 300px;
+	width: 90%;
+	margin-bottom: 30px;
 }
 
 .formErrorMessage {
-  position: absolute;
-  top: 32px;
-  left: 8px;
-  color: var(--orange);
+	position: absolute;
+	top: 32px;
+	left: 8px;
+	color: var(--orange);
 }
 
 .formButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	margin: auto;
 }

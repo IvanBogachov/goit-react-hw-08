@@ -1,14 +1,6 @@
 .contactList {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  list-style: none;
-}
-
-/* .contactList {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 10px;
-} */
+}

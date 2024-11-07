@@ -7,13 +7,13 @@ import UserMenu from '../UserMenu/UserMenu';
 import styles from './AppBar.module.css';
 
 const AppBar = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  return (
-    <header className={styles.header}>
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
-    </header>
-  );
+	const isLoggedIn = useSelector(selectIsLoggedIn);
+	return (
+		<header className={styles.header}>
+			<Navigation />
+			{isLoggedIn ? <UserMenu /> : <AuthNav />}
+		</header>
+	);
 };
 
 export default AppBar;
