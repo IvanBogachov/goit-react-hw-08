@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import { refreshUser } from '/src/redux/auth/operations';
-import { selectIsRefreshing } from '/src/redux/auth/selectors.js';
+import { refreshUser } from './redux/auth/operations';
+import { selectIsRefreshing } from './redux/auth/selectors';
 import PrivateRoute from './routes/PrivateRoute';
 import RestrictedRoute from "./routes/RestrictedRoute";
 import HomePage from '../src/pages/HomePage/HomePage';
@@ -25,27 +25,30 @@ function App() {
     <b>Refreshing user...</b>
   ) : (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route
-          path='/register'
+          path="/register"
           element={
-            <RestrictedRoute
-              redirectTo='/contacts'
-              component={<RegistrationPage />}
-            />
+            <RestrictedRoute>
+              <RegistrationPage />
+            </RestrictedRoute>
           }
         />
         <Route
-          path='/login'
+          path="/login"
           element={
-            <RestrictedRoute redirectTo='/contacts' component={<LoginPage />} />
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
           }
         />
         <Route
-          path='/contacts'
+          path="/contacts"
           element={
-            <PrivateRoute redirectTo='/login' component={<ContactsPage />} />
+            <PrivateRoute>
+              <ContactsPage />
+            </PrivateRoute>
           }
         />
       </Route>
