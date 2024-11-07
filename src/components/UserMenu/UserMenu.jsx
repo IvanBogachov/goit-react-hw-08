@@ -5,12 +5,12 @@ import { logout } from '/src/redux/auth/operations.js';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
+  const name = useSelector(selectUserName);
 
   return (
     <div className={css.wrapper}>
-      <p className={css.username}>Welcome, {userName}!</p>
-      <button type='button' onClick={() => dispatch(logout())}>
+      <p className={css.username}>Welcome, {name}!</p>
+      <button type="button" onClick={() => dispatch(logout())}>
         Logout
       </button>
     </div>
