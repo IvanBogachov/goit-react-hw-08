@@ -1,40 +1,91 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { login } from '/src/redux/auth/operations.js';
+import { CiLogin } from 'react-icons/ci';
+import { useId } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/auth/operations';
+
+import styles from './LoginForm.module.css';
+
+const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+
+const RegistrationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Please enter a valid email')
+    .required('Email is required field!'),
+  password: Yup.string()
+    .matches(passwordRules, 'Please create a stronger password!')
+    .required('Password is required field!'),
+});
+
+const initialValues = {
+  email: '',
+  password: '',
+};
 
 const LoginForm = () => {
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
+
   const dispatch = useDispatch();
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Password too short').required('Required'),
-  });
-
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (values, actions) => {
     dispatch(login(values));
-    setSubmitting(false);
+    actions.setSubmitting(false);
+    actions.resetForm();
   };
 
   return (
     <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={validationSchema}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={RegistrationSchema}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <label htmlFor='email'>Email</label>
-          <Field name='email' type='email' />
-          <ErrorMessage name='email' component='div' />
+        <Form className={styles.formContact}>
+          <label className={styles.formLabel} htmlFor={emailFieldId}>
+            Email
+          </label>
+          <div className={styles.formInputWrapper}>
+            <Field
+              className={styles.formInput}
+              type='email'
+              inputMode='email'
+              name='email'
+              id={emailFieldId}
+            />
+            <ErrorMessage
+              className={styles.formErrorMessage}
+              name='email'
+              component='div'
+            />
+          </div>
 
-          <label htmlFor='password'>Password</label>
-          <Field name='password' type='password' />
-          <ErrorMessage name='password' component='div' />
+          <label className={styles.formLabel} htmlFor={passwordFieldId}>
+            Password
+          </label>
+          <div className={styles.formInputWrapper}>
+            <Field
+              className={styles.formInput}
+              type='password'
+              inputMode='text'
+              name='password'
+              id={passwordFieldId}
+            />
+            <ErrorMessage
+              className={styles.formErrorMessage}
+              name='password'
+              component='div'
+            />
+          </div>
 
-          <button type='submit' disabled={isSubmitting}>
-            Log In
+          <button
+            className={styles.formButton}
+            type='submit'
+            disabled={isSubmitting}
+          >
+            <CiLogin /> <span>LogIn</span>
           </button>
         </Form>
       )}

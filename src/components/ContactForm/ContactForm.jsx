@@ -1,8 +1,10 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { addContact } from '/src/redux/contactsOps.js';
+import { useId } from 'react';
+import { useDispatch } from 'react-redux';
+import { IoIosPersonAdd } from 'react-icons/io';
+import toast from 'react-hot-toast';
+import { addContact } from '../../redux/contacts/operations';
 
 import styles from './ContactForm.module.css';
 
@@ -10,11 +12,11 @@ const ContactSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, `The "Name" is too Short!`)
     .max(50, `The "Name" is too Long!`)
-    .required('Required!'),
+    .required('The "Name" is Required field!'),
   number: Yup.string()
     .min(3, `The "Number" is too Short!`)
     .max(50, `The "Number" is too Long!`)
-    .required('Required!'),
+    .required('The "Number" is Required field!'),
 });
 
 const initialValues = {
@@ -23,27 +25,38 @@ const initialValues = {
 };
 
 const ContactForm = () => {
+  const nameFieldId = useId();
+
+  const numberFieldId = useId();
+
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    const newContact = {
-      id: Date.now().toString(),
-      name: values.name,
-      number: values.number,
-    };
-    dispatch(addContact(newContact));
-    setSubmitting(false);
-    resetForm();
+  const handleSubmit = (values, actions) => {
+    dispatch(addContact(values))
+      .unwrap()
+      .then((result) => {
+        toast.success(`Contact ${values.name} Successfully added!`);
+        console.log('result: ', result);
+
+        actions.setSubmitting(false);
+        actions.resetForm();
+      })
+      .catch((error) => {
+        toast.error('Failed to add contact');
+
+        actions.setSubmitting(false);
+      });
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={ContactSchema}>
+      validationSchema={ContactSchema}
+    >
       {({ isSubmitting }) => (
         <Form className={styles.formContact}>
-          <label className={styles.formLabel} htmlFor='name'>
+          <label className={styles.formLabel} htmlFor={nameFieldId}>
             Name
           </label>
           <div className={styles.formInputWrapper}>
@@ -51,7 +64,8 @@ const ContactForm = () => {
               className={styles.formInput}
               type='text'
               name='name'
-              id='name'
+              placeholder='Enter FirstName and LastName'
+              id={nameFieldId}
             />
             <ErrorMessage
               className={styles.formErrorMessage}
@@ -60,7 +74,7 @@ const ContactForm = () => {
             />
           </div>
 
-          <label className={styles.formLabel} htmlFor='number'>
+          <label className={styles.formLabel} htmlFor={numberFieldId}>
             Number
           </label>
           <div className={styles.formInputWrapper}>
@@ -69,7 +83,8 @@ const ContactForm = () => {
               type='tel'
               inputMode='tel'
               name='number'
-              id='number'
+              placeholder='Phone format: XXX-XXX-XXXX'
+              id={numberFieldId}
             />
             <ErrorMessage
               className={styles.formErrorMessage}
@@ -81,8 +96,10 @@ const ContactForm = () => {
           <button
             className={styles.formButton}
             type='submit'
-            disabled={isSubmitting}>
-            Add contact
+            disabled={isSubmitting}
+          >
+            <IoIosPersonAdd />
+            <span>Add</span>
           </button>
         </Form>
       )}

@@ -1,44 +1,111 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { register } from '/src/redux/auth/operations.js';
+import { useId } from 'react';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/auth/operations';
+
+import styles from './RegistrationForm.module.css';
+
+const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+
+const RegistrationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Name is too Short!')
+    .max(50, 'Name is too Long!')
+    .required('Name is Required field!'),
+  email: Yup.string()
+    .email('Please enter a valid email')
+    .required('Email is required field!'),
+  password: Yup.string()
+    .matches(passwordRules, 'Please create a stronger password!')
+    .required('Password is required field!'),
+});
+
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+};
 
 const RegistrationForm = () => {
+  const nameFieldId = useId();
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
+
   const dispatch = useDispatch();
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Password too short').required('Required'),
-  });
-
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (values, actions) => {
     dispatch(register(values));
-    setSubmitting(false);
+    actions.setSubmitting(false);
+    actions.resetForm();
   };
 
   return (
     <Formik
-      initialValues={{ name: '', email: '', password: '' }}
-      validationSchema={validationSchema}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={RegistrationSchema}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <label htmlFor='name'>Name</label>
-          <Field name='name' type='text' />
-          <ErrorMessage name='name' component='div' />
+        <Form className={styles.formContact}>
+          <label className={styles.formLabel} htmlFor={nameFieldId}>
+            Name
+          </label>
+          <div className={styles.formInputWrapper}>
+            <Field
+              className={styles.formInput}
+              type='text'
+              name='name'
+              id={nameFieldId}
+            />
+            <ErrorMessage
+              className={styles.formErrorMessage}
+              name='name'
+              component='div'
+            />
+          </div>
 
-          <label htmlFor='email'>Email</label>
-          <Field name='email' type='email' />
-          <ErrorMessage name='email' component='div' />
+          <label className={styles.formLabel} htmlFor={emailFieldId}>
+            Email
+          </label>
+          <div className={styles.formInputWrapper}>
+            <Field
+              className={styles.formInput}
+              type='email'
+              inputMode='email'
+              name='email'
+              id={emailFieldId}
+            />
+            <ErrorMessage
+              className={styles.formErrorMessage}
+              name='email'
+              component='div'
+            />
+          </div>
 
-          <label htmlFor='password'>Password</label>
-          <Field name='password' type='password' />
-          <ErrorMessage name='password' component='div' />
+          <label className={styles.formLabel} htmlFor={passwordFieldId}>
+            Password
+          </label>
+          <div className={styles.formInputWrapper}>
+            <Field
+              className={styles.formInput}
+              type='password'
+              inputMode='text'
+              name='password'
+              id={passwordFieldId}
+            />
+            <ErrorMessage
+              className={styles.formErrorMessage}
+              name='password'
+              component='div'
+            />
+          </div>
 
-          <button type='submit' disabled={isSubmitting}>
+          <button
+            className={styles.formButton}
+            type='submit'
+            disabled={isSubmitting}
+          >
             Register
           </button>
         </Form>
