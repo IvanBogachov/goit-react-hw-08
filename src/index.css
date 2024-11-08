@@ -1,5 +1,5 @@
 :root {
-	--orange: #d84315;
+	--orange: #242424;
 	--white: #ffffff;
 	--dark: #242424;
 	--deep-dark: #1a1a1a;
@@ -21,23 +21,19 @@
 
 a {
 	font-weight: 500;
-	color: var(--white);
+	color: v#ffffff;
 	text-decoration: inherit;
 	transition: color 0.3s ease;
 }
 
 a:hover {
-	color: #d84315; /* Зміна кольору тексту при наведенні */
+	color: #646cff;
 }
 
 body {
 	margin: 0;
-	/* display: flex;
-  place-items: center; */
-	/* color: #f9f9f9; */
 	min-width: 320px;
 	min-height: 100vh;
-	/* background-color: #f8f9fa; */
 }
 
 .disable-scroll {
@@ -56,15 +52,15 @@ button {
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
+	background-color: #ebebeb;
 	cursor: pointer;
 	transition:
-		border-color 0.25s ease,
+		border-color 0.3s ease,
 		color 0.3s ease;
 }
 button:hover {
-	color: var(--orange);
-	border-color: var(--orange);
+	color: #646cff;
+	border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
@@ -73,37 +69,36 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
 	:root {
-		color: var(--dark);
-		background-color: var(--light-silver);
+		color: #242424;
+		background-color: #ebebeb;
 	}
 
 	header {
-		background-color: var(--white);
+		background-color: #ffffff;
 	}
 
 	main {
-		background-color: var(--white);
+		background-color: #ffffff;
 	}
 
 	a {
 		transition: color 0.3s ease;
-		color: var(--dark);
+		color: #646cff;
 	}
 
 	a:hover {
-		color: var(--orange);
+		color: #646cff;
 	}
-	button {
-		color: var(--dark);
-		background-color: var(--light-silver);
-		/* #e6e3e3; */
+	/* button {
+		color: #242424;
+		background-color: #ebebeb;
 	}
 	button:hover {
-		color: var(--orange);
-		background-color: var(--light-silver);
-	}
+		color: #242424;
+		background-color: #ebebeb;
+	} */
 	input {
-		background-color: var(--light-silver);
+		background-color: #ebebeb;
 	}
 
 }

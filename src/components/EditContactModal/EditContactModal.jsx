@@ -11,14 +11,14 @@ import styles from './EditContactModal.module.css';
 import { selectContacts } from '../../redux/contacts/selectors';
 
 const ContactSchema = Yup.object().shape({
-	name: Yup.string()
-		.min(3, `The "Name" is too Short!`)
-		.max(50, `The "Name" is too Long!`)
-		.required('The "Name" is Required field!'),
-	number: Yup.string()
-		.min(3, `The "Number" is too Short!`)
-		.max(50, `The "Number" is too Long!`)
-		.required('The "Number" is Required field!'),
+  name: Yup.string()
+    .min(3, `The "Name" is too Short!`)
+    .max(50, `The "Name" is too Long!`)
+    .required("Required!"),
+  number: Yup.string()
+    .min(3, `The "Number" is too Short!`)
+    .max(50, `The "Number" is too Long!`)
+    .required("Required!"),
 });
 
 const EditContactModal = ({ handleUpdateContact, handleCloseModal, id }) => {

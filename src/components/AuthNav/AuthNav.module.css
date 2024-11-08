@@ -3,10 +3,13 @@
 	text-decoration: none;
 	padding: 12px;
 	font-weight: 700;
-	color: var(--white);
+	color: #242424;
+}
+.active {
+	color: #646cff;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
 	.link {
 		color: var(--dark);
 	}
@@ -14,4 +17,4 @@
 
 .active {
 	color: var(--orange);
-}
+} */

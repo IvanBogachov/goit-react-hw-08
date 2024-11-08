@@ -1,8 +1,8 @@
 import { IoIosContact } from 'react-icons/io';
 import { MdPhoneInTalk } from 'react-icons/md';
 
-import { AiOutlineUserDelete } from 'react-icons/ai';
-import { LiaUserEditSolid } from 'react-icons/lia';
+import { ImCross } from "react-icons/im";
+import { GoPencil } from "react-icons/go";
 
 import styles from './Contact.module.css';
 
@@ -49,52 +49,52 @@ const Contact = ({ contact }) => {
 	const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
 
 	return (
-		<>
-			<li className={styles.contactItem}>
-				<div className={styles.textWrapper}>
-					<div className={styles.contactContext}>
-						<IoIosContact />
-						<span>{contact.name}</span>
-					</div>
-					<div className={styles.contactContext}>
-						<MdPhoneInTalk />
-						<a href={`tel: ` + contact.number}>{contact.number}</a>
-					</div>
-				</div>
-				<div className={styles.btnWrapper}>
-					<button
-						onClick={handleOpenEditNodal}
-						type='button'
-						aria-label='edit button'
-					>
-						<LiaUserEditSolid color='#5c9beb' />
-					</button>
-					<button
-						onClick={handleOpenDeleteNodal}
-						type='button'
-						aria-label='delete button'
-					>
-						<AiOutlineUserDelete color='tomato' />
-					</button>
-				</div>
-			</li>
+    <>
+      <li className={styles.contactItem}>
+        <div className={styles.textWrapper}>
+          <div className={styles.contactContext}>
+            <IoIosContact />
+            <span>{contact.name}</span>
+          </div>
+          <div className={styles.contactContext}>
+            <MdPhoneInTalk />
+            <a href={`tel: ` + contact.number}>{contact.number}</a>
+          </div>
+        </div>
+        <div className={styles.btnWrapper}>
+          <button
+            onClick={handleOpenEditNodal}
+            type="button"
+            aria-label="edit button"
+          >
+            <GoPencil color="#646cff" />
+          </button>
+          <button
+            onClick={handleOpenDeleteNodal}
+            type="button"
+            aria-label="delete button"
+          >
+            <ImCross color="tomato" />
+          </button>
+        </div>
+      </li>
 
-			{isEditModalOpen && (
-				<EditContactModal
-					handleCloseModal={handleCloseEditModal}
-					handleUpdateContact={handleUpdateContact}
-					id={contact.id}
-				/>
-			)}
-			{isDeleteModalOpen && (
-				<DeleteContactModal
-					contact={contact}
-					handleDelete={handleDelete}
-					handleCancel={handleCloseDeleteModal}
-				/>
-			)}
-		</>
-	);
+      {isEditModalOpen && (
+        <EditContactModal
+          handleCloseModal={handleCloseEditModal}
+          handleUpdateContact={handleUpdateContact}
+          id={contact.id}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteContactModal
+          contact={contact}
+          handleDelete={handleDelete}
+          handleCancel={handleCloseDeleteModal}
+        />
+      )}
+    </>
+  );
 };
 
 export default Contact;
